@@ -5,6 +5,7 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,6 +36,8 @@ public class SyncMgr extends TimerTask {
 
 	// the loop timer.
 	private Timer timer;
+	// the time for check update.
+	private long checkTime;
 	// the sync manager workspace directory.
 	private File wsdir;
 	// all AutoMerge instance.
@@ -46,14 +49,15 @@ public class SyncMgr extends TimerTask {
 	 * private default constructor.
 	 */
 	private SyncMgr() {
-		timer = new Timer();
+		this.timer = new Timer();
+		this.checkTime = 30000;
 	}
 
 	/**
 	 * start loop timer.
 	 */
 	public void startTimer() {
-		this.timer.schedule(this, 0, 30000);
+		this.timer.schedule(this, 0, this.checkTime);
 	}
 
 	/**
@@ -136,6 +140,48 @@ public class SyncMgr extends TimerTask {
 	}
 
 	/**
+	 * add an AutoMeerge to workspace.
+	 * 
+	 * @param name
+	 *            AutoMerge name.
+	 * @param local
+	 *            the local repository URI.
+	 * @param lbranch
+	 *            the local repository branch.
+	 * @param remote
+	 *            the remote repository URI.
+	 * @param rbranch
+	 *            the remote repository branch.
+	 * @throws IOException
+	 *             IO exception.
+	 * @throws InvalidRemoteException
+	 *             GIT exception.
+	 * @throws TransportException
+	 *             GIT exception.
+	 * @throws GitAPIException
+	 *             GIT exception.
+	 */
+	public synchronized void addAMerge(String name, String local,
+			String lbranch, String remote, String rbranch) throws IOException,
+			InvalidRemoteException, TransportException, GitAPIException {
+		File wdir = new File(this.wsdir, name);
+		AutoMerge am = new AutoMerge(wdir);
+		am.cloneLocal(local, "master");
+		am.cloneRemote(remote, "master");
+		am.initAMerge();
+		this.amerges.put(wdir.getAbsolutePath(), am);
+	}
+
+	/**
+	 * get all AutoMerge names.
+	 * 
+	 * @return the set of names.
+	 */
+	public synchronized Set<String> names() {
+		return this.amerges.keySet();
+	}
+
+	/**
 	 * get the AutoMerge by name.
 	 * 
 	 * @param name
@@ -190,4 +236,20 @@ public class SyncMgr extends TimerTask {
 	public synchronized void setSync2Remoete(boolean sync2Remoete) {
 		this.sync2Remoete = sync2Remoete;
 	}
+
+	/**
+	 * @return the checkTime
+	 */
+	public long getCheckTime() {
+		return checkTime;
+	}
+
+	/**
+	 * @param checkTime
+	 *            the checkTime to set
+	 */
+	public void setCheckTime(long checkTime) {
+		this.checkTime = checkTime;
+	}
+
 }
