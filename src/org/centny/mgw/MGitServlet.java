@@ -16,13 +16,25 @@ import org.centny.jge.amerge.AutoMerge;
 import org.eclipse.jgit.http.server.GitServlet;
 import org.eclipse.jgit.http.server.GitSmartHttpTools;
 
+/**
+ * the MGitServlert.
+ * 
+ * @author Scorpion
+ * 
+ */
 public class MGitServlet extends GitServlet {
 
 	/**
-	 * 
+	 * serial id.
 	 */
 	private static final long serialVersionUID = 5157514874051960832L;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.jgit.http.server.GitServlet#init(javax.servlet.ServletConfig)
+	 */
 	@Override
 	public void init(final ServletConfig config) throws ServletException {
 		SyncMgr.smgr().setWsDir(new File("/tmp/mgit"));
@@ -40,6 +52,13 @@ public class MGitServlet extends GitServlet {
 		super.init(config);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.jgit.http.server.glue.MetaServlet#service(javax.servlet.http
+	 * .HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse res)
 			throws IOException, ServletException {
@@ -66,7 +85,7 @@ public class MGitServlet extends GitServlet {
 				return;
 			}
 		}
-//		System.out.println(req.getPathInfo());
+		// System.out.println(req.getPathInfo());
 		super.service(req, res);
 		if (GitSmartHttpTools.isReceivePack(req) && am != null
 				&& SyncMgr.smgr().isSync2Remoete()) {
