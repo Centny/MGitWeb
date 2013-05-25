@@ -15,10 +15,16 @@ import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 
+/**
+ * the repository manager.
+ * 
+ * @author Centny.
+ * 
+ */
 public class RepoMgrServlet extends HttpServlet {
 
 	/**
-	 * 
+	 * serial version id.
 	 */
 	private static final long serialVersionUID = 3600259257847149848L;
 

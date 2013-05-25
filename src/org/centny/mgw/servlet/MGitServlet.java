@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.centny.jge.amerge.AutoMerge;
 import org.centny.mgw.SyncMgr;
-import org.centny.mgw.jgit.SecurityFileResolver;
+import org.centny.mgw.jgit.AuthorizationFileResolver;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jgit.http.server.GitServlet;
@@ -79,12 +79,12 @@ public class MGitServlet extends GitServlet {
 		// initial resolver.
 		File root = getFile(config, "base-path");
 		boolean exportAll = getBoolean(config, "export-all");
-		this.setRepositoryResolver(new SecurityFileResolver(root, exportAll));
+		this.setRepositoryResolver(new AuthorizationFileResolver(root, exportAll));
 		this.log.info("initial by(base-path:" + root.getAbsolutePath()
 				+ ",export-all:" + exportAll + ")");
 		//
-		System.out.println("<-----ssssssddddddddddd------>");
-		System.out.println(config.getInitParameter("base-path"));
+		// System.out.println("<-----ssssssddddddddddd------>");
+		// System.out.println(config.getInitParameter("base-path"));
 		// SyncMgr.smgr().setWsDir(new File("/tmp/mgit"));
 		// SyncMgr.smgr().setSync2Remoete(true);
 		// AutoMerge am = SyncMgr.smgr().amerge("jgd");

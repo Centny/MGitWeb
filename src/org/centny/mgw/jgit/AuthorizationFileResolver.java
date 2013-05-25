@@ -32,7 +32,7 @@ import org.eclipse.jgit.util.FS;
  * @author Centny.
  * 
  */
-public class SecurityFileResolver implements
+public class AuthorizationFileResolver implements
 		RepositoryResolver<HttpServletRequest> {
 	private volatile boolean exportAll;
 
@@ -41,7 +41,7 @@ public class SecurityFileResolver implements
 	private final Collection<File> exportBase;
 
 	/** Initialize an empty file based resolver. */
-	public SecurityFileResolver() {
+	public AuthorizationFileResolver() {
 		exports = new ConcurrentHashMap<String, Repository>();
 		exportBase = new CopyOnWriteArrayList<File>();
 	}
@@ -55,7 +55,7 @@ public class SecurityFileResolver implements
 	 *            if true, exports all repositories, ignoring the check for the
 	 *            {@code git-daemon-export-ok} files.
 	 */
-	public SecurityFileResolver(final File basePath, final boolean exportAll) {
+	public AuthorizationFileResolver(final File basePath, final boolean exportAll) {
 		this();
 		exportDirectory(basePath);
 		setExportAll(exportAll);
