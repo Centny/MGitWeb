@@ -7,7 +7,7 @@
 		<servlet-class>org.centny.mgw.servlet.MGitServlet</servlet-class>
 		<init-param>
 			<param-name>base-path</param-name>
-			<param-value>/Users/Scorpion/git/MGitWeb/Jetty4ADev/data/repo</param-value>
+			<param-value>$(REPO_DIR)</param-value>
 		</init-param>
 		<init-param>
 			<param-name>export-all</param-name>
@@ -19,7 +19,7 @@
 		<servlet-class>org.centny.mgw.servlet.RepoMgrServlet</servlet-class>
 		<init-param>
 			<param-name>base-path</param-name>
-			<param-value>/Users/Scorpion/git/MGitWeb/Jetty4ADev/data/repo</param-value>
+			<param-value>$(REPO_DIR)</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
