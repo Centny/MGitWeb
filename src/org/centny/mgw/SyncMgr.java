@@ -44,6 +44,8 @@ public class SyncMgr extends TimerTask {
 	private Map<String, AutoMerge> amerges = new HashMap<String, AutoMerge>();
 	// if sync to remote.
 	private boolean sync2Remoete;
+	// if timer started.
+	private boolean timerStarted;
 
 	/**
 	 * private default constructor.
@@ -54,9 +56,19 @@ public class SyncMgr extends TimerTask {
 	}
 
 	/**
+	 * check timer started.
+	 * 
+	 * @return timer started.
+	 */
+	public boolean isTimerStarted() {
+		return this.timerStarted;
+	}
+
+	/**
 	 * start loop timer.
 	 */
 	public void startTimer() {
+		this.timerStarted = true;
 		this.timer.schedule(this, 0, this.checkTime);
 	}
 
@@ -65,6 +77,7 @@ public class SyncMgr extends TimerTask {
 	 */
 	public void stopTimer() {
 		this.timer.cancel();
+		this.timerStarted = false;
 	}
 
 	/**

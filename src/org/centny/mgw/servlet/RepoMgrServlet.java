@@ -107,6 +107,17 @@ public class RepoMgrServlet extends HttpServlet {
 		this.doCmds(req, resp, cmds);
 	}
 
+	/**
+	 * @param req
+	 *            http request.
+	 * @param resp
+	 *            http response.
+	 * @param cmds
+	 *            the execute command and parameter.
+	 * @throws IOException
+	 *             error exception.
+	 * 
+	 */
 	protected void doCmds(HttpServletRequest req, HttpServletResponse resp,
 			List<String> cmds) throws IOException {
 		if (cmds.isEmpty()) {
@@ -119,6 +130,18 @@ public class RepoMgrServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * add a repository.
+	 * 
+	 * @param req
+	 *            http request.
+	 * @param resp
+	 *            http response.
+	 * @param cmds
+	 *            the add command and parameter.
+	 * @throws IOException
+	 *             error exception.
+	 */
 	private void addRepositroy(HttpServletRequest req,
 			HttpServletResponse resp, List<String> cmds) throws IOException {
 		if (cmds.size() < 2) {

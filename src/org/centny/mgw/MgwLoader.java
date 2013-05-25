@@ -78,6 +78,11 @@ public class MgwLoader extends ServerListener {
 		} catch (Exception e) {
 			this.log.warn(e);
 		}
+		String sws = webp.getProperty("SYNC_WS");
+		if (sws != null && sws.trim().length() > 0) {
+			SyncMgr.smgr().setWsDir(new File(sws));
+			SyncMgr.smgr().startTimer();
+		}
 	}
 
 	/*
@@ -119,6 +124,9 @@ public class MgwLoader extends ServerListener {
 			} catch (Exception e) {
 				this.log.warn(e);
 			}
+		}
+		if (SyncMgr.smgr().isTimerStarted()) {
+			SyncMgr.smgr().stopTimer();
 		}
 	}
 

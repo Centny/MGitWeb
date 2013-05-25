@@ -22,9 +22,21 @@
 			<param-value>$(REPO_DIR)</param-value>
 		</init-param>
 	</servlet>
+		<servlet>
+		<servlet-name>AMerge</servlet-name>
+		<servlet-class>org.centny.mgw.servlet.AMergeServlet</servlet-class>
+		<init-param>
+			<param-name>base-path</param-name>
+			<param-value>$(SYNC_WS)</param-value>
+		</init-param>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>RepoMgr</servlet-name>
 		<url-pattern>/repo/*</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>AMerge</servlet-name>
+		<url-pattern>/amerge/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>GitServlet</servlet-name>
