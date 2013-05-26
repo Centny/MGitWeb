@@ -149,15 +149,17 @@ public class SyncMgr extends TimerTask {
 	 * @throws GitAPIException
 	 *             GIT exception.
 	 */
-	public synchronized void addAMerge(String name, String local, String remote)
+	public void addAMerge(String name, String local, String remote)
 			throws IOException, InvalidRemoteException, TransportException,
 			GitAPIException {
-		File wdir = new File(this.wsdir, name);
-		AutoMerge am = new AutoMerge(wdir);
-		am.cloneLocal(local, "master");
-		am.cloneRemote(remote, "master");
-		am.initAMerge();
-		this.amerges.put(wdir.getAbsolutePath(), am);
+		synchronized (this.amerges) {
+			File wdir = new File(this.wsdir, name);
+			AutoMerge am = new AutoMerge(wdir);
+			am.cloneLocal(local, "master");
+			am.cloneRemote(remote, "master");
+			am.initAMerge();
+			this.amerges.put(wdir.getAbsolutePath(), am);	
+		}
 	}
 
 	/**

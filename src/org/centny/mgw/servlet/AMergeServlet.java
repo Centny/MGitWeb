@@ -47,7 +47,8 @@ public class AMergeServlet extends CmdServlet {
 	private void addAMerge(HttpServletRequest req, HttpServletResponse resp,
 			List<String> cmds) throws IOException, ServletException {
 		if (cmds.size() < 2) {
-			this.sendBadRequest(resp, "name is not setted.");
+			this.sendBadRequest(resp,
+					"Usage:amerge/add/<name>?local=<local addres>&remote=<remote address>");
 			return;
 		}
 		String name = cmds.get(1);
@@ -58,6 +59,11 @@ public class AMergeServlet extends CmdServlet {
 			return;
 		}
 		try {
+			// File tt = new File("/tmp/tt");
+			// if (tt.exists()) {
+			// FileUtils.deleteDirectory(tt);
+			// }
+			// JGitExt.clone(tt, local);
 			SyncMgr.smgr().addAMerge(name, local, remote);
 			resp.getOutputStream().write("OK".getBytes());
 		} catch (Exception e) {

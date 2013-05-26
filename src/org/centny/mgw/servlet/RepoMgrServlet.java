@@ -75,8 +75,7 @@ public class RepoMgrServlet extends CmdServlet {
 	protected void doCmds(HttpServletRequest req, HttpServletResponse resp,
 			List<String> cmds) throws IOException {
 		if (cmds.size() < 2) {
-			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
-					"repository name must be setted.");
+			this.sendBadRequest(resp, "Usage:[add|export|unexport|auth]/<repository name>/");
 			return;
 		}
 		String rname = cmds.get(1);
@@ -92,7 +91,7 @@ public class RepoMgrServlet extends CmdServlet {
 			this.exportRepository(req, resp, rname, false);
 		} else if (cmd.equals("auth")) {
 			if (cmds.size() < 5) {
-				this.sendBadRequest(resp, "invalid parameter.");
+				this.sendBadRequest(resp, "Usage:auth/<repository name>/[role|user]/[add|del]");
 				return;
 			}
 			String targ = cmds.get(2);
@@ -170,9 +169,9 @@ public class RepoMgrServlet extends CmdServlet {
 				} else {
 					JGitExt.markUnexport(git.getRepository());
 				}
+				resp.getOutputStream().write("Ok".getBytes());
 			} catch (Exception e) {
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND,
-						"mark repository error.");
+				resp.getOutputStream().write("Error".getBytes());
 			}
 		} else {
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND,
