@@ -118,13 +118,13 @@ public class MGitServlet extends GitServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse res)
 			throws IOException, ServletException {
 		String name = req.getPathInfo();
-		this.log.debug("request path info:" + name);
 		while (name != null && 0 < name.length() && name.charAt(0) == '/')
 			name = name.substring(1);
 		if (name == null || name.length() == 0) {
 			sendError(req, res, SC_NOT_FOUND);
 			return;
 		}
+		this.log.debug("git server for " + name);
 		name = name.replaceAll("\\.git.*$", "");
 		AutoMerge am = SyncMgr.smgr().amerge(name);
 		if (am != null) {

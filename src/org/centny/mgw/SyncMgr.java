@@ -11,6 +11,8 @@ import java.util.TimerTask;
 
 import org.centny.jge.JGitExt;
 import org.centny.jge.amerge.AutoMerge;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
@@ -46,6 +48,8 @@ public class SyncMgr extends TimerTask {
 	private boolean sync2Remoete;
 	// if timer started.
 	private boolean timerStarted;
+	// the logger.
+	private Logger log = Log.getLogger(SyncMgr.class);
 
 	/**
 	 * private default constructor.
@@ -70,6 +74,7 @@ public class SyncMgr extends TimerTask {
 	public void startTimer() {
 		this.timerStarted = true;
 		this.timer.schedule(this, 0, this.checkTime);
+		this.log.info("start SyncMgr timer.");
 	}
 
 	/**
@@ -78,6 +83,7 @@ public class SyncMgr extends TimerTask {
 	public void stopTimer() {
 		this.timer.cancel();
 		this.timerStarted = false;
+		this.log.info("stop SyncMgr timer.");
 	}
 
 	/**
@@ -91,6 +97,8 @@ public class SyncMgr extends TimerTask {
 		if (!this.wsdir.exists()) {
 			JGitExt.assertTrue(this.wsdir.mkdirs());
 		}
+		this.log.info("setting SyncMgr workspace path:"
+				+ wsdir.getAbsolutePath());
 		this.loadAMerges();
 	}
 
@@ -229,6 +237,7 @@ public class SyncMgr extends TimerTask {
 				e.printStackTrace();
 			}
 		}
+		this.log.debug("AMerge synchronized...");
 	}
 
 	/**
