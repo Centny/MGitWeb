@@ -49,6 +49,9 @@ public class MGitServlet extends GitServlet {
 					HttpServerText.get().parameterNotSet, param));
 
 		File path = new File(n);
+		if (!path.exists()) {
+			path.mkdirs();
+		}
 		if (!path.exists())
 			throw new ServletException(MessageFormat.format(
 					HttpServerText.get().pathForParamNotFound, path, param));
@@ -78,8 +81,12 @@ public class MGitServlet extends GitServlet {
 	public void init(final ServletConfig config) throws ServletException {
 		// initial resolver.
 		File root = getFile(config, "base-path");
+		if (!root.exists()) {
+			root.mkdirs();
+		}
 		boolean exportAll = getBoolean(config, "export-all");
-		this.setRepositoryResolver(new AuthorizationFileResolver(root, exportAll));
+		this.setRepositoryResolver(new AuthorizationFileResolver(root,
+				exportAll));
 		this.log.info("initial by(base-path:" + root.getAbsolutePath()
 				+ ",export-all:" + exportAll + ")");
 		//

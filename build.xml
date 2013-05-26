@@ -43,6 +43,7 @@
 				<exclude name="**/*.java" />
 			</fileset>
 		</copy>
+		<delete file="${deploy.dir}/${ant.project.name}.war" />
 		<war warfile="${deploy.dir}/${ant.project.name}.war" webxml="${web.dir}/WEB-INF/web.xml">
 			<fileset dir="${web.dir}" />
 			<classes dir="${dest.dir}" />
@@ -50,6 +51,7 @@
 	</target>
 
 	<target name="toJ4A" depends="MGitWeb.war">
+		<delete file="${deploy.dir}/${ant.project.name}.j4a" />
 		<exec executable="/usr/local/bin/war2j4a">
 			<arg value="${deploy.f}" />
 			<env key="DX_HOME" value="/Applications/adt-bundle-mac/sdk/build-tools/android-4.2.2/" />
