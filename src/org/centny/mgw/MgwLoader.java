@@ -81,6 +81,7 @@ public class MgwLoader extends ServerListener {
 		String sws = webp.getProperty("SYNC_WS");
 		if (sws != null && sws.trim().length() > 0) {
 			SyncMgr.smgr().setWsDir(new File(sws));
+			SyncMgr.smgr().setSync2Remoete(true);
 			SyncMgr.smgr().startTimer();
 		}
 	}

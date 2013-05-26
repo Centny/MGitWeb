@@ -11,7 +11,7 @@
 		</init-param>
 		<init-param>
 			<param-name>export-all</param-name>
-			<param-value>1</param-value>
+			<param-value>0</param-value>
 		</init-param>
 	</servlet>
 	<servlet>
@@ -22,7 +22,7 @@
 			<param-value>$(REPO_DIR)</param-value>
 		</init-param>
 	</servlet>
-		<servlet>
+	<servlet>
 		<servlet-name>AMerge</servlet-name>
 		<servlet-class>org.centny.mgw.servlet.AMergeServlet</servlet-class>
 		<init-param>
@@ -34,7 +34,7 @@
 		<servlet-name>RepoMgr</servlet-name>
 		<url-pattern>/repo/*</url-pattern>
 	</servlet-mapping>
-		<servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>AMerge</servlet-name>
 		<url-pattern>/amerge/*</url-pattern>
 	</servlet-mapping>
@@ -52,10 +52,19 @@
 			<role-name>git</role-name>
 		</auth-constraint>
 	</security-constraint>
-		<security-constraint>
+	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Repo</web-resource-name>
 			<url-pattern>/repo/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+		<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>AMerge</web-resource-name>
+			<url-pattern>/amerge/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>admin</role-name>

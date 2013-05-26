@@ -1,12 +1,15 @@
 package org.centny.mgw.servlet;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AMergeServlet extends HttpServlet {
+import org.centny.mgw.SyncMgr;
+
+public class AMergeServlet extends CmdServlet {
 
 	/**
 	 * serial version id.
@@ -16,27 +19,49 @@ public class AMergeServlet extends HttpServlet {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest
-	 * , javax.servlet.http.HttpServletResponse)
+	 * @see org.centny.mgw.servlet.CmdServlet#doCmds(javax.servlet.http.
+	 * HttpServletRequest, javax.servlet.http.HttpServletResponse,
+	 * java.util.List)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		super.doGet(req, resp);
+	protected void doCmds(HttpServletRequest req, HttpServletResponse resp,
+			List<String> cmds) throws ServletException, IOException {
+		if (cmds.get(0).equals("add")) {
+			this.addAMerge(req, resp, cmds);
+		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * @param req
+	 *            http request.
+	 * @param resp
+	 *            http response.
+	 * @param cmds
+	 *            the execute command and parameter.
+	 * @throws ServletException
+	 *             error exception.
+	 * @throws IOException
+	 *             error exception.
 	 * 
-	 * @see
-	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest
-	 * , javax.servlet.http.HttpServletResponse)
 	 */
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		
+	private void addAMerge(HttpServletRequest req, HttpServletResponse resp,
+			List<String> cmds) throws IOException, ServletException {
+		if (cmds.size() < 2) {
+			this.sendBadRequest(resp, "name is not setted.");
+			return;
+		}
+		String name = cmds.get(1);
+		String local = req.getParameter("local");
+		String remote = req.getParameter("remote");
+		if (local == null || remote == null) {
+			this.sendBadRequest(resp, "local and remote address is not setted.");
+			return;
+		}
+		try {
+			SyncMgr.smgr().addAMerge(name, local, remote);
+			resp.getOutputStream().write("OK".getBytes());
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
 	}
-
 }
