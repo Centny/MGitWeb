@@ -11,21 +11,21 @@ import org.eclipse.jetty.util.log.Logger;
 import org.junit.Test;
 
 public class MGWTest {
-//	static {
-//		URL url = MGWTest.class.getClassLoader().getResource(
-//				"log4jetty.properties");
-//		if (url != null) {
-//			InputStream is = null;
-//			try {
-//				is = url.openStream();
-//				System.getProperties().load(is);
-//			} catch (IOException e) {
-//			}
-//			IO.close(is);
-//		}
-//	}
+	// static {
+	// URL url = MGWTest.class.getClassLoader().getResource(
+	// "log4jetty.properties");
+	// if (url != null) {
+	// InputStream is = null;
+	// try {
+	// is = url.openStream();
+	// System.getProperties().load(is);
+	// } catch (IOException e) {
+	// }
+	// IO.close(is);
+	// }
+	// }
 
-//	@Test
+	// @Test
 	public void testXmlGenerator() {
 		Logger log = Log.getLogger(this.getClass());
 		log.debug("ssssss");
@@ -38,6 +38,7 @@ public class MGWTest {
 	@Test
 	public void testMgw() throws Exception {
 		JettyDevServer.initWebDev();
+		System.getProperties().setProperty("MGIT_DIR", "Jetty4ADev");
 		JettyServer jds = JettyServer.createServer(JettyDevServer.class, 8080);
 		jds.start();
 		jds.join();

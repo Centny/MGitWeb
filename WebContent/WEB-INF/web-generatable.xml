@@ -31,16 +31,16 @@
 		</init-param>
 	</servlet>
 	<servlet-mapping>
+		<servlet-name>GitServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
 		<servlet-name>RepoMgr</servlet-name>
 		<url-pattern>/repo/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>AMerge</servlet-name>
 		<url-pattern>/amerge/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>GitServlet</servlet-name>
-		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 	<!-- security configure -->
 	<security-constraint>
