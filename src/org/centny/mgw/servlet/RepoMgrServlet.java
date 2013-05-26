@@ -75,7 +75,8 @@ public class RepoMgrServlet extends CmdServlet {
 	protected void doCmds(HttpServletRequest req, HttpServletResponse resp,
 			List<String> cmds) throws IOException {
 		if (cmds.size() < 2) {
-			this.sendBadRequest(resp, "Usage:[add|export|unexport|auth]/<repository name>/");
+			this.sendBadRequest(resp,
+					"Usage:[add|export|unexport|auth]/<repository name>/");
 			return;
 		}
 		String rname = cmds.get(1);
@@ -91,7 +92,8 @@ public class RepoMgrServlet extends CmdServlet {
 			this.exportRepository(req, resp, rname, false);
 		} else if (cmd.equals("auth")) {
 			if (cmds.size() < 5) {
-				this.sendBadRequest(resp, "Usage:auth/<repository name>/[role|user]/[add|del]");
+				this.sendBadRequest(resp,
+						"Usage:auth/<repository name>/[role|user]/[add|del]/<role or user name>");
 				return;
 			}
 			String targ = cmds.get(2);
