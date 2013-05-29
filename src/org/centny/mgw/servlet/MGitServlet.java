@@ -146,9 +146,11 @@ public class MGitServlet extends GitServlet {
 		if (GitSmartHttpTools.isReceivePack(req) && am != null
 				&& SyncMgr.smgr().isSync2Remoete()) {
 			try {
-				am.checkLogAndL2R();
+				log.debug("check git log and sync local to remote");
+				String result = am.checkLogAndL2R();
+				log.debug("checkLogAndL2R:" + result);
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.warn("checkLogAndL2R error", e);
 			}
 		}
 	}

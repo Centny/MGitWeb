@@ -138,8 +138,13 @@ public class RepoMgrServlet extends CmdServlet {
 			return;
 		}
 		try {
-			FileRepository nrepo = new FileRepository(repo);
-			nrepo.create();
+			String uri = req.getParameter("uri");
+			if (uri == null || uri.isEmpty()) {
+				FileRepository nrepo = new FileRepository(repo);
+				nrepo.create();
+			} else {
+				JGitExt.createRepository(repo, uri, "master");
+			}
 			resp.getOutputStream().write("OK".getBytes());
 		} catch (Exception e) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
