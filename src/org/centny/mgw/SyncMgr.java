@@ -158,7 +158,7 @@ public class SyncMgr extends TimerTask {
 			am.cloneLocal(local, "master");
 			am.cloneRemote(remote, "master");
 			am.initAMerge();
-			this.amerges.put(wdir.getAbsolutePath(), am);	
+			this.amerges.put(wdir.getAbsolutePath(), am);
 		}
 	}
 
@@ -231,15 +231,27 @@ public class SyncMgr extends TimerTask {
 	 */
 	@Override
 	public void run() {
+		int conflicted = 0;
+		int updated = 0;
+		int error = 0;
 		for (String key : this.amerges.keySet()) {
 			try {
 				AutoMerge am = this.amerges.get(key);
-				am.pullR2L();
+				String res = am.pullR2L();
+				if (res.length() < 1) {
+					updated++;
+				} else if ("Conflicting".equals(res)) {
+					conflicted++;
+				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				error++;
+				this.log.debug("AMerge error:", e);
 			}
 		}
-		this.log.debug("AMerge synchronized...");
+		if (conflicted > 0 || updated > 0 || error > 0) {
+			this.log.info("AMerge synchronized (confilcted:" + conflicted
+					+ ",updated:" + updated + ",error:" + error + ")");
+		}
 	}
 
 	/**
