@@ -6,10 +6,8 @@ import java.util.Properties;
 import org.centny.jetty4a.server.api.JettyServer;
 import org.centny.jetty4a.server.dev.JettyDevServer;
 import org.centny.mgw.XmlGenerator;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
-import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.junit.Test;
 
 public class MGWTest {
@@ -41,14 +39,7 @@ public class MGWTest {
 	public void testMgw() throws Exception {
 		JettyDevServer.initWebDev();
 		System.getProperties().setProperty("MGIT_DIR", "Jetty4ADev");
-		QueuedThreadPool threadPool = new QueuedThreadPool();
-		threadPool.setMaxThreads(10);
-		SelectChannelConnector connector = new SelectChannelConnector();
-		connector.setThreadPool(threadPool);
-		connector.setPort(8080);
-		JettyServer jds = JettyServer.createServer(JettyDevServer.class);
-		jds.addConnector(connector);
-//		jds.setThreadPool(threadPool);
+		JettyServer jds = JettyServer.createServer(JettyDevServer.class, 8080);
 		jds.start();
 		jds.join();
 	}
